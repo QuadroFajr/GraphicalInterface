@@ -1,0 +1,11 @@
+{
+  "name": "experiment",
+  "private": true,
+  "scripts": {
+    "build": "esbuild ./program.ts --bundle --outfile=compiled/program.js",
+    "build:watched": "npm run build -- --watch"
+  },
+  "dependencies": {
+    "esbuild": "~0.19.11"
+  }
+}

@@ -1,5 +1,5 @@
 {
-    "name": "ruby-ui-system",
+    "name": "clarity-graphical-interface",
     "description": "Complex fully featured UI system",
     "scripts": {
         "compile": "node ./tools/bin.js --compile",
