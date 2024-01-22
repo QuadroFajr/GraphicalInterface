@@ -1,7 +1,4 @@
 {
     "name": "clarity-graphical-interface",
-    "description": "Complex fully featured UI system",
-    "dependencies": {
-        "esbuild": "^0.19.10"
-    }
+    "description": "Complex fully featured UI system"
 }

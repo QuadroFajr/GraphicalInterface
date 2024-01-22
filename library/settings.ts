@@ -22,6 +22,7 @@ export interface MeasureMap {
     panel_gap: string,
     content_padding: string,
     control_padding: string,
+    minimum_button_width: string,
 
     x0_text_size: string,
     x1_text_size: string
@@ -59,6 +60,7 @@ const x0_measure_map: MeasureMap = {
     panel_gap: "1px",
     content_padding: "8px",
     control_padding: "8px 20px",
+    minimum_button_width: "120px",
 
     x0_text_size: "12px",
     x1_text_size: "10px"

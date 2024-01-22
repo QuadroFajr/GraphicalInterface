@@ -1,6 +1,7 @@
 import {Button} from "./elements/button";
 import {Settings, x0_settings} from "./settings";
 import {Computed, Mode} from "./computed";
+import {Label} from "./elements/label";
 
 declare global {
     interface HTMLElement {
@@ -11,12 +12,12 @@ declare global {
     }
 }
 
-function define(name: string, element: CustomElementConstructor) {
-    HTMLElement.prototype.__tcgi_internalized_ui_settings__ = { mode: Mode.Inherit };
+export function apply_prototype_extension(target: any) {
+    target.prototype.__tcgi_internalized_ui_settings__ = { mode: Mode.Inherit };
 
-    HTMLElement.prototype.get_settings_computed = function() {
+    target.prototype.get_settings_computed = function() {
         if (this.__tcgi_internalized_ui_settings__.mode == Mode.Inherit) {
-            if (!this.parentNode)
+            if (!this.parentNode || typeof this.parentNode.get_settings_computed === "undefined")
                 return x0_settings;
 
             return this.parentNode.get_settings_computed();
@@ -25,17 +26,22 @@ function define(name: string, element: CustomElementConstructor) {
         return this.__tcgi_internalized_ui_settings__.value;
     }
 
-    HTMLElement.prototype.get_settings = function() {
+    target.prototype.get_settings = function() {
         return this.__tcgi_internalized_ui_settings__;
     }
 
-    HTMLElement.prototype.set_settings = function(new_settings) {
+    target.prototype.set_settings = function(new_settings) {
         this.__tcgi_internalized_ui_settings__ = new_settings;
     }
+}
 
+function define(name: string, element: CustomElementConstructor) {
     window.customElements.define(`tcgi-${name}`, element);
 }
 
 export function setup_ui() {
+    apply_prototype_extension(HTMLElement);
+    apply_prototype_extension(Element);
     define("button", Button);
+    define("label", Label);
 }

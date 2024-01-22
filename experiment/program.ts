@@ -1,35 +1,22 @@
 import {setup_ui} from "../library/library";
-import {Button} from "../library/elements/button";
+import {Mode} from "../library/computed";
 import {x0_settings} from "../library/settings";
-import {Computed, Mode} from "../library/computed";
+import {Button} from "../library/elements/button";
+import {Label} from "../library/elements/label";
 
 setup_ui();
-const root = document.querySelector(".root") as HTMLElement;
-
-const modf = { ...x0_settings };
+const root = document.querySelector(".root");
 
 root.set_settings({
     mode: Mode.Explicit,
-    value: {
-        color_map: {
-            root_background_color: "red"
-        },
-        measure_map: {
-            control_padding: "100px"
-        }
-    }
+    value: x0_settings
 });
 
-const btn = Button.construct();
-root.appendChild(btn);
+{
+    // Simple button demo test
+    const button = Button.construct();
+    const label = Label.construct();
 
-const btn2 = Button.construct();
-btn2.set_settings({
-    mode: Mode.Explicit,
-    value: x0_settings
-})
-root.appendChild(btn2);
-
-let computed: Computed<number> = {
-    mode: Mode.Inherit
+    button.set_label(label);
+    root.appendChild(button);
 }
