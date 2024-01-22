@@ -17,8 +17,21 @@ root.set_settings({
     const button = Button.construct();
     const label = Label.construct();
 
+    label.set_text("Reload")
+    label.set_description("This will reload the current webpage.");
+
     button.set_label(label);
     root.appendChild(button);
+
+    let val = false;
+    button.addEventListener("click", () => {
+        val = !val;
+        if (val) {
+            label.set_description(null);
+        } else {
+            label.set_description("Hello World");
+        }
+    })
 }
 
 {
@@ -28,6 +41,23 @@ root.set_settings({
 
     label.set_text("Click this to see temporary message");
     button.set_label(label);
+
+    let val = false;
+    button.addEventListener("click", () => {
+        val = !val;
+        if (val) {
+            label.set_description(null);
+        } else {
+            label.set_description("This description is very long. The purpose is to test and ensure that line wrapping renders correctly and is aesthetically pleasing.");
+        }
+    })
+
+    const icon = document.createElement("img");
+    icon.src = "./logo.svg";
+    icon.style.width = "100%";
+    label.set_icon(icon);
+
+    button.style.maxWidth = "300px";
 
     root.appendChild(button);
 }
