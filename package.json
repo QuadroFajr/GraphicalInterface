@@ -1,10 +1,6 @@
 {
     "name": "clarity-graphical-interface",
     "description": "Complex fully featured UI system",
-    "scripts": {
-        "compile": "node ./tools/bin.js --compile",
-        "test": "node ./tools/bin.js --test"
-    },
     "dependencies": {
         "esbuild": "^0.19.10"
     }
