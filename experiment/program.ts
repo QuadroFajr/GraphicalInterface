@@ -20,3 +20,15 @@ root.set_settings({
     button.set_label(label);
     root.appendChild(button);
 }
+
+
+{
+    // Another simple button demo test
+    const button = Button.construct();
+    const label = Label.construct();
+
+    label.set_text("Short");
+
+    button.set_label(label);
+    root.appendChild(button);
+}

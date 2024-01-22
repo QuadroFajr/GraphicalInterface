@@ -4,10 +4,12 @@ import {Computed, Mode} from "./computed";
 import {Label} from "./elements/label";
 
 declare global {
-    interface HTMLElement {
+    interface Element extends UISettingsMethods {}
+    interface HTMLElement extends UISettingsMethods {}
+    interface UISettingsMethods {
         __tcgi_internalized_ui_settings__: Computed<Settings>,
         get_settings_computed(): Settings,
-        get_settings(): Computed<Settings>
+        get_settings(): Computed<Settings>,
         set_settings(new_settings: Computed<Settings>): void,
     }
 }

@@ -25,6 +25,9 @@ export class Button extends HTMLElement {
         this.style.borderWidth = settings.measure_map.x1_border_width;
         this.style.borderStyle = settings.measure_map.x1_border_style;
         this.style.borderColor = settings.color_map.x1_handle_color;
+        this.style.background = settings.color_map.control_background_color;
+        this.style.padding = settings.measure_map.control_padding;
+        this.style.cursor = "pointer";
 
         // Control width
         this.style.minWidth = settings.measure_map.minimum_button_width;
@@ -35,5 +38,12 @@ export class Button extends HTMLElement {
         this.style.justifyContent = "center";
 
         // Mouse over effect
+        this.addEventListener("mouseover", () => {
+            this.style.background = settings.color_map.root_background_color;
+        });
+
+        this.addEventListener("mouseleave", () => {
+            this.style.background = settings.color_map.control_background_color;
+        })
     }
 }
