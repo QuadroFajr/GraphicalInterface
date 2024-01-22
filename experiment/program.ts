@@ -42,7 +42,7 @@ root.set_settings({
     label.set_text("Click this to see temporary message");
     button.set_label(label);
 
-    let val = false;
+    let val = true;
     button.addEventListener("click", () => {
         val = !val;
         if (val) {

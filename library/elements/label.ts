@@ -83,6 +83,9 @@ export class Label extends HTMLElement {
         this.image_section.style.display = "flex";
         this.image_section.style.alignItems = "center";
         this.image_section.style.justifyContent = "center";
+        this.image_section.style.userSelect = "none";
+        this.image_section.draggable = false;
+        this.image_section.style.pointerEvents = "none";
 
         // Apply text styles
         this.text_element.style.fontSize = settings.measure_map.x0_text_size;
