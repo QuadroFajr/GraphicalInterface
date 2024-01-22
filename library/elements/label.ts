@@ -69,6 +69,7 @@ export class Label extends HTMLElement {
         this.style.gap = expand_css_measure(settings.measure_map.control_padding).right;
         this.style.alignItems = "center";
         this.style.justifyContent = "center";
+        this.style.padding = settings.measure_map.control_padding;
 
         this.text_section.style.display = "flex";
         this.text_section.style.flexDirection = "column";

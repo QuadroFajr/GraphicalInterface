@@ -4,60 +4,49 @@ import {x0_settings} from "../library/settings";
 import {Button} from "../library/elements/button";
 import {Label} from "../library/elements/label";
 
+// Initialize root of UI interface
 const root = document.querySelector(".root");
 setup_ui(root);
 
+// Setup interface settings
 root.set_settings({
     mode: Mode.Explicit,
     value: x0_settings
 });
+// TODO: Implement a system to render UI again when theme changes
 
 {
-    // Simple button demo test
+    // Create reload button
     const button = Button.construct();
     const label = Label.construct();
 
-    label.set_text("Reload")
-    label.set_description("This will reload the current webpage.");
+    // Set properties
+    label.set_text("Reload");
+    label.set_description("Reload this webpage with location.reload()");
+
+    // Setup button
+    button.addEventListener("click", () => {
+        if (confirm("Are you sure you want to reload this application? Written storage will not be erased.")) {
+            location.reload();
+        }
+    });
 
     button.set_label(label);
     root.appendChild(button);
-
-    let val = false;
-    button.addEventListener("click", () => {
-        val = !val;
-        if (val) {
-            label.set_description(null);
-        } else {
-            label.set_description("Hello World");
-        }
-    })
 }
 
 {
-    // Another simple button demo test
-    const button = Button.construct();
-    const label = Label.construct();
+    // Create google search interface
 
-    label.set_text("Click this to see temporary message");
-    button.set_label(label);
+    // Info label
+    const info_label = Label.construct();
+    info_label.set_text("Google search interface");
+    info_label.set_description([
+        "This system will allow you to search google on this page in real",
+        "time with results as a drop down. This application will scrape",
+        "google search results and refine them for viewing."
+    ].join(" "));
 
-    let val = true;
-    button.addEventListener("click", () => {
-        val = !val;
-        if (val) {
-            label.set_description(null);
-        } else {
-            label.set_description("This description is very long. The purpose is to test and ensure that line wrapping renders correctly and is aesthetically pleasing.");
-        }
-    })
-
-    const icon = document.createElement("img");
-    icon.src = "./logo.svg";
-    icon.style.width = "100%";
-    label.set_icon(icon);
-
-    button.style.maxWidth = "300px";
-
-    root.appendChild(button);
+    info_label.style.maxWidth = "400px";
+    root.appendChild(info_label);
 }

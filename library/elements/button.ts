@@ -26,7 +26,6 @@ export class Button extends HTMLElement {
         this.style.borderStyle = settings.measure_map.x1_border_style;
         this.style.borderColor = settings.color_map.x1_handle_color;
         this.style.background = settings.color_map.control_background_color;
-        this.style.padding = settings.measure_map.control_padding;
         this.style.cursor = "pointer";
 
         // Control width
