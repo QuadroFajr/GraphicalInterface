@@ -18,14 +18,15 @@ export function apply_prototype_extension(target: any) {
     target.prototype.__tcgi_internalized_ui_settings__ = { mode: Mode.Inherit };
 
     target.prototype.get_settings_computed = function() {
-        if (this.__tcgi_internalized_ui_settings__.mode == Mode.Inherit) {
-            if (!this.parentNode || typeof this.parentNode.get_settings_computed === "undefined")
+        let selected = this;
+        while (selected.__tcgi_internalized_ui_settings__.mode == Mode.Inherit) {
+            if (!selected.parentNode || typeof selected.parentNode.get_settings_computed === "undefined") {
                 return x0_settings;
+            }
 
-            return this.parentNode.get_settings_computed();
+            selected = selected.parentNode;
         }
-
-        return this.__tcgi_internalized_ui_settings__.value;
+        return selected.__tcgi_internalized_ui_settings__.value;
     }
 
     target.prototype.get_settings = function() {
@@ -41,9 +42,12 @@ function define(name: string, element: CustomElementConstructor) {
     window.customElements.define(`tcgi-${name}`, element);
 }
 
-export function setup_ui() {
+export function setup_ui(root: HTMLElement | Element) {
     apply_prototype_extension(HTMLElement);
     apply_prototype_extension(Element);
     define("button", Button);
     define("label", Label);
+
+    const root_settings = root.get_settings_computed();
+    document.body.style.background = root_settings.color_map.root_background_color;
 }

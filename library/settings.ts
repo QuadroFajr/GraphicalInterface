@@ -25,7 +25,9 @@ export interface MeasureMap {
     minimum_button_width: string,
 
     x0_text_size: string,
-    x1_text_size: string
+    x1_text_size: string,
+
+    font_family: string
 }
 
 export enum LightnessCharacter {
@@ -63,7 +65,9 @@ const x0_measure_map: MeasureMap = {
     minimum_button_width: "120px",
 
     x0_text_size: "12px",
-    x1_text_size: "10px"
+    x1_text_size: "10px",
+
+    font_family: "JetBrains Mono"
 }
 
 /**

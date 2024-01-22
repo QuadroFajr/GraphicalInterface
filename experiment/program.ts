@@ -4,8 +4,8 @@ import {x0_settings} from "../library/settings";
 import {Button} from "../library/elements/button";
 import {Label} from "../library/elements/label";
 
-setup_ui();
 const root = document.querySelector(".root");
+setup_ui(root);
 
 root.set_settings({
     mode: Mode.Explicit,
@@ -21,14 +21,13 @@ root.set_settings({
     root.appendChild(button);
 }
 
-
 {
     // Another simple button demo test
     const button = Button.construct();
     const label = Label.construct();
 
-    label.set_text("Short");
-
+    label.set_text("Click this to see temporary message");
     button.set_label(label);
+
     root.appendChild(button);
 }
