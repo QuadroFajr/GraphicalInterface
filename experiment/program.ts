@@ -59,10 +59,16 @@ root.set_settings({
 
     // Search input
     const search_input = Input.construct();
-    search_input.set_text("Abc");
-    search_input.set_text("Arbc");
-    search_input.set_text("X");
+    search_input.set_text("Search google for something");
     root.appendChild(search_input);
+
+    // Action bar
+    const action_bar = document.createElement("div");
+
+    action_bar.style.display = "flex";
+    action_bar.style.gap = "8px";
+    action_bar.style.justifyContent = "flex-end";
+    action_bar.style.width = "100%";
 
     // Submit control
     const error_message = Label.construct();
@@ -84,5 +90,16 @@ root.set_settings({
         root.prepend(error_message);
     });
 
-    root.appendChild(submit_button);
+    // About application button
+    const about_application_command = Button.construct();
+    {
+        const label = Label.construct();
+        label.set_text("About This Application");
+        about_application_command.set_label(label);
+    }
+
+    action_bar.appendChild(about_application_command);
+    action_bar.appendChild(submit_button);
+
+    root.appendChild(action_bar);
 }

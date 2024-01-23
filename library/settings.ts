@@ -80,7 +80,11 @@ export interface MeasureMap {
 
     font_family: string,
     icon_width: string,
-    icon_height: string
+    icon_height: string,
+
+    text_line_gap: string,
+    input_max_width: string,
+    input_min_width: string
 }
 
 export enum LightnessCharacter {
@@ -122,7 +126,11 @@ const x0_measure_map: MeasureMap = {
 
     font_family: "JetBrains Mono",
     icon_width: "21px",
-    icon_height: "21px"
+    icon_height: "21px",
+
+    text_line_gap: "4px",
+    input_max_width: "none",
+    input_min_width: "400px"
 }
 
 /**

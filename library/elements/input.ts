@@ -1,6 +1,12 @@
+export enum LayoutDirection {
+    LeftToRight,
+    RighToLeft
+}
+
 export class Input extends HTMLElement {
     private text: string = "";
     private text_editor_rows = document.createElement("div");
+    private layout_direction = LayoutDirection.LeftToRight;
 
     static construct() {
         return document.createElement("tcgi-input") as Input;
@@ -11,51 +17,45 @@ export class Input extends HTMLElement {
         this.attachShadow({mode: "open"});
     }
 
-    render_text(old_text: string) {
-        // We don't empty the row list because we use insertion rather than re-rendering everything.
-        // Options:
-        //   - Insert
-        //   - Delete
-        let len = Math.max(old_text.length, this.text.length);
-        let offset = 0;
-        console.log("IN", old_text)
-        let target = old_text;
-        for(let index = 0; index < len; index++) {
-            const old_symbol = old_text[index];
-            const new_symbol = this.text[index];
+    render_text() {
+        this.text_editor_rows.innerHTML = "";
+        const lines = this.text.split("\n");
 
-            console.log("--- [O=" + old_symbol + "] [N=" + new_symbol + "]");
+        lines.forEach((line) => {
+            const line_element = document.createElement("div");
+            const characters = line.split("");
 
-            if (old_symbol === new_symbol) {
-                console.log("  !! Symbol is the same, no changes needed");
-                continue;
-            }
+            line_element.style.display = "flex";
+            line_element.style.height = "14px";
+            line_element.style.alignItems = "center";
 
-            // Handle deletion of extra symbols.
-            if (old_symbol !== undefined && new_symbol === undefined) {
-                console.log("Delete " + old_symbol, index, target);
-                target = target.deleteAt(index - offset);
-                offset++;
-                continue;
-            }
+            characters.forEach((character) => {
+                const character_element = document.createElement("pre");
+                character_element.innerText = character;
 
-            // Insert missing symbols assuming they don't need to be replaced.
-            if (old_symbol !== new_symbol) {
-                console.log("  !! Inject + " + new_symbol);
-                target = target.insert(index, new_symbol);
-                offset--;
-                continue;
-            }
-        }
+                character_element.style.padding = "0";
+                character_element.style.margin = "0";
 
-        console.log("TARGET " + target, len);
+                character_element.addEventListener("click", (event) => {
+                    const bounding_rect = character_element.getBoundingClientRect();
+                    const x_offset = Math.max(0, event.clientX - bounding_rect.x);
+                    const mid_horizontal = bounding_rect.width / 2;
+                    const next_index_selected = x_offset > mid_horizontal;
+
+
+                });
+
+                line_element.appendChild(character_element);
+            });
+
+            this.text_editor_rows.appendChild(line_element);
+        });
     }
 
     set_text(new_text: string) {
         const old_text = this.text;
         this.text = new_text;
-        this.render_text(old_text);
-        this.shadowRoot.innerHTML = new_text;
+        this.render_text();
     }
 
     connectedCallback() {
@@ -68,6 +68,19 @@ export class Input extends HTMLElement {
         this.style.borderBottomColor = settings.color_map.x0_border_color as any;
         this.style.borderWidth = settings.measure_map.x1_border_width;
         this.style.borderStyle = settings.measure_map.x1_border_style;
+        this.style.display = "flex";
+        this.style.width = "100%";
+        this.style.maxWidth = settings.measure_map.input_max_width;
+        this.style.minWidth = settings.measure_map.input_min_width;
+        this.style.gap = settings.measure_map.panel_gap;
+
+        // Apply text editor area styles
+        this.text_editor_rows.style.padding = settings.measure_map.control_padding;
+        this.text_editor_rows.style.fontFamily = settings.measure_map.font_family;
+        this.text_editor_rows.style.fontSize = settings.measure_map.x0_text_size;
+        this.text_editor_rows.style.display = "flex";
+        this.text_editor_rows.style.flexDirection = "column";
+        this.text_editor_rows.style.gap = settings.measure_map.text_line_gap;
 
         this.shadowRoot.appendChild(this.text_editor_rows);
     }
