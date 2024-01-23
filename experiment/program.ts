@@ -59,7 +59,7 @@ root.set_settings({
 
     // Search input
     const search_input = Input.construct();
-    search_input.set_text("Search google for something");
+    search_input.set_text("Search google for something\n\nEdit the following lines:\n  - Target: Google\n  - Scraper: True");
     root.appendChild(search_input);
 
     // Action bar
