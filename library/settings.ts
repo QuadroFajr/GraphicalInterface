@@ -138,7 +138,7 @@ export const x0_color_map: ColorMap = {
     x0_handle_color: "#000000",
     x1_handle_color: "#555555",
 
-    x0_border_color: "rgba(0, 0, 0, 47%)",
+    x0_border_color: "rgba(0, 0, 0, 60%)",
     x1_border_color: "rgba(0, 0, 0, 10%)"
 }
 
@@ -173,3 +173,17 @@ export const x0_settings: Settings = {
  * The measure map for people with slightly blurry vision.
  */
 // TODO: Implement blurry vision measures
+
+// export const x1_color_map: ColorMap = {
+//     root_background_color: "#000000",
+//     control_background_color: "#222222",
+//
+//     attribution_elevated_color: "rgba(255, 255, 255, 10%)",
+//     body_background_elevated_color: "rgba(255, 255, 255, 5%)",
+//
+//     x0_handle_color: "#FFFFFF",
+//     x1_handle_color: "#999999",
+//
+//     x0_border_color: "rgba(0, 0, 0, 47%)",
+//     x1_border_color: "rgba(0, 0, 0, 10%)"
+// }

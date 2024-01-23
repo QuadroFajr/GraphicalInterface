@@ -3,6 +3,7 @@ import {Mode} from "../library/computed";
 import {x0_settings} from "../library/settings";
 import {Button} from "../library/elements/button";
 import {Label} from "../library/elements/label";
+import {Input} from "../library/elements/input";
 
 // Initialize root of UI interface
 const root = document.querySelector(".root");
@@ -13,6 +14,7 @@ root.set_settings({
     mode: Mode.Explicit,
     value: x0_settings
 });
+
 // TODO: Implement a system to render UI again when theme changes
 
 {
@@ -47,6 +49,40 @@ root.set_settings({
         "google search results and refine them for viewing."
     ].join(" "));
 
-    info_label.style.maxWidth = "400px";
     root.appendChild(info_label);
+
+    // Search label
+    const search_label = Label.construct();
+    search_label.set_text("Search query");
+    search_label.set_description("What would you like to search for through google?");
+    root.appendChild(search_label);
+
+    // Search input
+    const search_input = Input.construct();
+    search_input.set_text("Abc");
+    search_input.set_text("Arbc");
+    search_input.set_text("X");
+    root.appendChild(search_input);
+
+    // Submit control
+    const error_message = Label.construct();
+    const submit_button = Button.construct();
+    {
+        const label = Label.construct();
+        label.set_text("Search");
+        submit_button.set_label(label);
+    }
+
+    submit_button.addEventListener("click", () => {
+        const icon = document.createElement("img");
+        icon.src = "https://www.freeiconspng.com/thumbs/error-icon/error-icon-15.png";
+        icon.style.width = "100%";
+
+        error_message.set_icon(icon);
+        error_message.set_text("Error: Search not implemented");
+        error_message.set_description("There is no implementation for a google scraper or fully functional input system yet.");
+        root.prepend(error_message);
+    });
+
+    root.appendChild(submit_button);
 }

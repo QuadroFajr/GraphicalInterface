@@ -13,6 +13,11 @@ declare global {
         get_settings(): Computed<Settings>,
         set_settings(new_settings: Computed<Settings>): void,
     }
+
+    interface String {
+        insert(index: number, text: string): string,
+        deleteAt(index: number, length?: number): string
+    }
 }
 
 export function apply_prototype_extension(target: any) {
@@ -44,8 +49,27 @@ function define(name: string, element: CustomElementConstructor) {
 }
 
 export function setup_ui(root: HTMLElement | Element) {
+    String.prototype.insert = function(index, string) {
+        if (index > 0)
+        {
+            return this.substring(0, index) + string + this.substring(index, this.length);
+        }
+
+        return string + this;
+    };
+
+    String.prototype.deleteAt = function(index, length = 1) {
+        if (index >= 0 && index < this.length) {
+            return this.slice(0, index) + this.slice(index + length);
+        }
+        return this.toString();
+    };
+
     apply_prototype_extension(HTMLElement);
     apply_prototype_extension(Element);
+
+    // TODO: Apply root flex styles to root variable correctly
+
     define("button", Button);
     define("label", Label);
     define("input", Input);

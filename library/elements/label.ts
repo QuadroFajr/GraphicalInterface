@@ -1,4 +1,4 @@
-import {expand_css_measure} from "../settings";
+import {expand_css_measure, Settings} from "../settings";
 
 export class Label extends HTMLElement {
     private text = "";

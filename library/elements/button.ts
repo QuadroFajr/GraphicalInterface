@@ -22,10 +22,11 @@ export class Button extends HTMLElement {
         const settings = this.get_settings_computed();
 
         // Border styles
+        const idle_background = settings.color_map.control_background_color;
         this.style.borderWidth = settings.measure_map.x1_border_width;
         this.style.borderStyle = settings.measure_map.x1_border_style;
-        this.style.borderColor = settings.color_map.x1_handle_color;
-        this.style.background = settings.color_map.control_background_color;
+        this.style.borderColor = settings.color_map.x0_border_color;
+        this.style.background = idle_background;
         this.style.cursor = "pointer";
 
         // Control width
@@ -38,11 +39,11 @@ export class Button extends HTMLElement {
 
         // Mouse over effect
         this.addEventListener("mouseover", () => {
-            this.style.background = settings.color_map.root_background_color;
+            this.style.background = settings.color_map.attribution_elevated_color;
         });
 
         this.addEventListener("mouseleave", () => {
-            this.style.background = settings.color_map.control_background_color;
-        })
+            this.style.background = idle_background;
+        });
     }
 }

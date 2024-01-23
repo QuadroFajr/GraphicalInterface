@@ -1,4 +1,5 @@
 {
     "name": "tcgi",
-    "description": "Complex fully featured UI system"
+    "description": "Complex fully featured UI system",
+    "types": "./library/types.d.ts"
 }
