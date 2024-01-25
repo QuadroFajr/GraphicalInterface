@@ -128,6 +128,7 @@ const x0_measure_map: MeasureMap = {
     icon_width: "21px",
     icon_height: "21px",
 
+    text_line_gap: "8px",
     input_max_width: "none",
     input_min_width: "400px"
 }

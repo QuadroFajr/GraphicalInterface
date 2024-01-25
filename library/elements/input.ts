@@ -30,8 +30,6 @@ export class Input extends HTMLElement {
     private text_editor_rows = document.createElement("div");
     private layout_direction = LayoutDirection.LeftToRight;
     private text_carets: Caret[] = [];
-    private caret_x = 0;
-    private caret_y = 0;
 
     static construct() {
         return document.createElement("tcgi-input") as Input;
@@ -44,6 +42,7 @@ export class Input extends HTMLElement {
 
     render_text() {
         this.text_editor_rows.innerHTML = "";
+
         const lines = this.text.split("\n");
 
         lines.forEach((line, index) => {
@@ -53,20 +52,20 @@ export class Input extends HTMLElement {
             line_element.style.display = "flex";
             line_element.style.height = "14px";
             line_element.style.alignItems = "center";
-            line_element.style.position = "relative";
+            line_element.style.cursor = "text";
 
-            const line_carets = this.text_carets.filter((tc) => tc.caret_row == index);
-
-            line_carets.forEach((caret) => {
-                line_element.appendChild(caret.caret_element);
-            });
-
-            characters.forEach((character) => {
+            characters.forEach((character, char_index) => {
                 const character_element = document.createElement("pre");
-                character_element.innerText = character;
+                character_element.innerHTML = character;
+                if (character === " ") {
+                    character_element.innerHTML = "&nbsp;";
+                }
 
                 character_element.style.padding = "0";
                 character_element.style.margin = "0";
+                character_element.style.display = "flex";
+                character_element.style.alignItems = "center";
+                character_element.style.whiteSpace = "pre";
 
                 character_element.addEventListener("click", (event) => {
                     const bounding_rect = character_element.getBoundingClientRect();
@@ -74,13 +73,17 @@ export class Input extends HTMLElement {
                     const mid_horizontal = bounding_rect.width / 2;
                     const next_index_selected = x_offset > mid_horizontal;
 
-
+                    // TODO: Move caret
                 });
 
                 line_element.appendChild(character_element);
             });
 
             this.text_editor_rows.appendChild(line_element);
+        });
+
+        this.text_carets.forEach(caret => {
+            this.text_editor_rows.appendChild(caret.caret_element);
         });
     }
 
@@ -92,7 +95,37 @@ export class Input extends HTMLElement {
 
     private add_caret(caret: Caret) {
         this.text_carets.push(caret);
+        this.text_editor_rows.appendChild(caret.caret_element);
+
+        caret.caret_element.style.top = "0";
+        caret.caret_element.style.left = "0";
+
         this.render_text();
+    }
+
+    // This function could have been avoided for a more robust method by separating the text and caret system into its own compoent.
+    position_caret() {
+        Object.keys(this.text_editor_rows.children).forEach((row_index) => {
+            const row: HTMLElement = this.text_editor_rows.children[row_index];
+            const carets_in_row = this.text_carets.filter(c => c.caret_row == +row_index);
+
+            Object.keys(row.children).forEach((char_index) => {
+                const char = row.children[char_index];
+                const char_bound = char.getBoundingClientRect();
+                const carets_in_column = carets_in_row.filter(c => c.caret_character == +char_index);
+
+                if (carets_in_column.length == 0) return;
+                const caret = carets_in_column[0]; // If they are all in the same place it doesn't make sense to render all of them.
+                const container_bound = this.text_editor_rows.getBoundingClientRect();
+
+                const relative_x = char_bound.x - container_bound.x;
+                const relative_y = char_bound.y - container_bound.y;
+
+                caret.caret_element.style.left = `${relative_x}px`;
+                caret.caret_element.style.height = `${char_bound.height}`;
+                caret.caret_element.style.top = `${relative_y}px`;
+            });
+        });
     }
 
     connectedCallback() {
@@ -118,6 +151,7 @@ export class Input extends HTMLElement {
         this.text_editor_rows.style.display = "flex";
         this.text_editor_rows.style.flexDirection = "column";
         this.text_editor_rows.style.gap = expand_css_measure(settings.measure_map.control_padding).top;
+        this.text_editor_rows.style.position = "relative";
 
         // Setup interface
         this.shadowRoot.appendChild(this.text_editor_rows);
@@ -125,6 +159,9 @@ export class Input extends HTMLElement {
 
         // Make primary text caret
         const primary_caret = new Caret(settings);
+        primary_caret.caret_row = 2;
+        primary_caret.caret_character = 5;
         this.add_caret(primary_caret);
+        this.position_caret();
     }
 }
