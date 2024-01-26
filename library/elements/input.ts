@@ -25,11 +25,20 @@ class Caret {
     }
 }
 
+export enum LineWrap {
+    None,
+    // Soft wrap
+    x0,
+    // Hard wrap
+    x1
+}
+
 export class Input extends HTMLElement {
     private text: string = "";
     private text_editor_rows = document.createElement("div");
     private layout_direction = LayoutDirection.LeftToRight;
     private text_carets: Caret[] = [];
+    private line_wrap = LineWrap.x0;
 
     static construct() {
         return document.createElement("tcgi-input") as Input;
@@ -54,7 +63,7 @@ export class Input extends HTMLElement {
             line_element.style.alignItems = "center";
             line_element.style.cursor = "text";
 
-            characters.forEach((character, char_index) => {
+            const create_character = (character: string, char_index: number) => {
                 const character_element = document.createElement("pre");
                 character_element.innerHTML = character;
                 if (character === " ") {
@@ -66,6 +75,7 @@ export class Input extends HTMLElement {
                 character_element.style.display = "flex";
                 character_element.style.alignItems = "center";
                 character_element.style.whiteSpace = "pre";
+                character_element.style.height = "14px";
 
                 character_element.addEventListener("click", (event) => {
                     const bounding_rect = character_element.getBoundingClientRect();
@@ -76,8 +86,49 @@ export class Input extends HTMLElement {
                     // TODO: Move caret
                 });
 
-                line_element.appendChild(character_element);
-            });
+                return character_element;
+            };
+
+            const create_word_element = () => {
+                const element = document.createElement("div");
+
+                element.style.display = "flex";
+                element.style.alignItems = "center";
+                element.style.whiteSpace = "pre";
+                element.style.height = "14px";
+
+                return element;
+            };
+
+            if (this.line_wrap == LineWrap.x0) {
+                line_element.style.flexFlow = "row wrap";
+                let current_word_element = create_word_element();
+
+                characters.forEach((character, char_index) => {
+                    const character_element = create_character(character, char_index);
+
+                    if (character === " ") {
+                        line_element.appendChild(current_word_element);
+                        line_element.appendChild(character_element);
+
+                        current_word_element = create_word_element();
+                    } else {
+                        current_word_element.appendChild(character_element);
+                    }
+                });
+            } else if (this.line_wrap == LineWrap.x1) {
+                line_element.style.flexFlow = "row wrap";
+
+                characters.forEach((character, char_index) => {
+                    const character_element = create_character(character, char_index);
+                    line_element.appendChild(character_element);
+                });
+            } else {
+                characters.forEach((character, char_index) => {
+                    const character_element = create_character(character, char_index);
+                    line_element.appendChild(character_element);
+                });
+            }
 
             this.text_editor_rows.appendChild(line_element);
         });
@@ -150,6 +201,7 @@ export class Input extends HTMLElement {
         this.text_editor_rows.style.fontSize = settings.measure_map.x0_text_size;
         this.text_editor_rows.style.display = "flex";
         this.text_editor_rows.style.flexDirection = "column";
+        this.text_editor_rows.style.overflow = "auto";
         this.text_editor_rows.style.gap = expand_css_measure(settings.measure_map.control_padding).top;
         this.text_editor_rows.style.position = "relative";
 
@@ -159,8 +211,8 @@ export class Input extends HTMLElement {
 
         // Make primary text caret
         const primary_caret = new Caret(settings);
-        primary_caret.caret_row = 2;
-        primary_caret.caret_character = 5;
+        primary_caret.caret_row = 5;
+        primary_caret.caret_character = 40;
         this.add_caret(primary_caret);
         this.position_caret();
     }
