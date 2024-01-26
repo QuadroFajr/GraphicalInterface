@@ -3,6 +3,7 @@ import {Settings, x0_settings} from "./settings";
 import {Computed, Mode} from "./computed";
 import {Label} from "./elements/label";
 import {Input} from "./elements/input";
+import {Divider} from "./elements/divider";
 
 declare global {
     interface Element extends UISettingsMethods {}
@@ -73,6 +74,7 @@ export function setup_ui(root: HTMLElement | Element) {
     define("button", Button);
     define("label", Label);
     define("input", Input);
+    define("divider", Divider);
 
     const root_settings = root.get_settings_computed();
     document.body.style.background = root_settings.color_map.root_background_color;

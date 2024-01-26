@@ -60,6 +60,7 @@ root.set_settings({
     // Search input
     const search_input = Input.construct();
     search_input.set_text("Search google for something\n\nEdit the following lines:\n  - Target: Google\n  - Scraper: True\nThis line down here is designed to be very long. The purpose is to ensure that lines are distinct but also support line wrapping and the text caret can position correctly. We use flex-flow to allow for the line wrapping and cursor uses element position distance calculations by their center.");
+    search_input.style.height = "100px";
     root.appendChild(search_input);
 
     // Action bar

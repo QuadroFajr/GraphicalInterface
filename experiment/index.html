@@ -65,6 +65,33 @@
                 padding: 8px;
                 gap: 8px;
             }
+
+            .no-scroll-bar::-webkit-scrollbar {
+                display: none;
+            }
+
+            .no-scroll-bar {
+                scrollbar-width: none;
+            }
+
+            ::-webkit-scrollbar {
+                width: 10px;
+            }
+
+            /* Track */
+            ::-webkit-scrollbar-track {
+                background: #999;
+            }
+
+            /* Handle */
+            ::-webkit-scrollbar-thumb {
+                background: #888;
+            }
+
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+                background: #555;
+            }
         </style>
     </head>
     <body>
