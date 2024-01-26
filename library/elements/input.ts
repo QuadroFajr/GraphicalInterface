@@ -59,7 +59,6 @@ export class Input extends HTMLElement {
             const characters = line.split("");
 
             line_element.style.display = "flex";
-            line_element.style.height = "14px";
             line_element.style.alignItems = "center";
             line_element.style.cursor = "text";
 
