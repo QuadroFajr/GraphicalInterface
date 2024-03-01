@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+$root: #181818;
+$elevated: #232323;
+
+$layer: rgba(255, 255, 255, 4%);
+$top: rgba(255, 255, 255, 8%);
+
+$input: #00B7CD;
+$dropdown: #B20036;
+$action: #D87800;
+$unit: rgba(255, 255, 255, 40%);
+
+$font-size: 11px;
+$control-padding: 4px 16px;
+$content-padding: 4px;
+$gap: 4px;
+$div: rgba(255, 255, 255, 10%);
+
+* {
+    font-family: Montserrat;
+}
+
+$root: #202020;
+$elevated: #2e2e2e;
+
+$layer: rgba(255, 255, 255, 6%);
+$top: rgba(255, 255, 255, 9%);
+
+$input: #00B7CD;
+$dropdown: #B20036;
+$action: #ff8800;
+
+$font-size: 11px;
+$control-padding: 4px 16px;
+$control-small-padding: 4px 6px;
+$content-padding: 4px;
+$gap: 4px;
+$div: rgba(255, 255, 255, 15%);
